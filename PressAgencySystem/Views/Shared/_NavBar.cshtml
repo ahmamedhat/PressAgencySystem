@@ -1,0 +1,18 @@
+﻿<div class="navbar navbar-expand-sm navbar-dark navbar-fixed-top bg-dark" style="margin-bottom:30px">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li class="nav-item">@Html.ActionLink("Employees", "Index2", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                <li class="nav-item">@Html.ActionLink("Students", "getStudents", "Students", new { area = "" }, new { @class = "navbar-brand" })</li>
+            </ul>
+        </div>
+    </div>
+</div>
