@@ -18,5 +18,6 @@ namespace PressAgencySystem.Models
         public int ArticleTypeId { get; set; }
         [Display(Name = "Article Type")]
         public ArticleType ArticleType { get; set; }
+        public int Accepted { get; set; }
     }
 }

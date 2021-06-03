@@ -1,0 +1,55 @@
+﻿@model IEnumerable<PressAgencySystem.Models.User>
+
+@{
+    ViewBag.Title = "GetUsers";
+}
+
+<h2>Users List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Register", null, null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-bordered table-hover">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role.Title)
+        </th>
+        <th>Action</th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserName)
+    </td>
+    <td>
+        @{ 
+        if (item.RoleId == 2)
+            {
+                <p>Editor</p>
+            }
+            else
+            {
+                <p>Viewer</p>
+            }
+        }
+
+    </td>
+    <td>
+        @Html.ActionLink("Delete", "DeleteUser", new { id = item.Id } , new { @class= "btn btn-danger"})
+    </td>
+</tr>
+}
+
+</table>

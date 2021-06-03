@@ -1,4 +1,5 @@
 ﻿using PressAgencySystem.Models;
+using PressAgencySystem.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
@@ -26,6 +27,33 @@ namespace PressAgencySystem.Controllers
             return View(User);
         }
 
+        public ActionResult Register()
+        {
+            var roles = _context.Roles.ToList();
+            var viewModel = new UserFormViewModel
+            {
+                User = new User(),
+                Roles = roles
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            if (!ModelState.IsValid)
+                return View("Register", user);
+            if (_context.Users.Where(u => u.Email == user.Email).Any())
+            {
+                ModelState.AddModelError("Email", "This Email Already Exists");
+                return View("Register", user);
+            }
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("GetUsers");
+        }
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -47,6 +75,26 @@ namespace PressAgencySystem.Controllers
             
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetUsers()
+        {
+            var users = _context.Users.Where(u => u.RoleId != 1);
+            return View(users);
+        }
+
+        public ActionResult DeleteUser(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var user = _context.Users.SingleOrDefault(c => c.Id == id);
+            if (user == null)
+                return HttpNotFound();
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("GetUsers");
         }
         protected override void Dispose(bool disposing)
         {

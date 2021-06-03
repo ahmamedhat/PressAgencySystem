@@ -177,6 +177,10 @@
     <Compile Include="Migrations\202106030222208_addingUserRolesToUsersTable.Designer.cs">
       <DependentUpon>202106030222208_addingUserRolesToUsersTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106031415447_addedAcceptColomnInPost.cs" />
+    <Compile Include="Migrations\202106031415447_addedAcceptColomnInPost.Designer.cs">
+      <DependentUpon>202106031415447_addedAcceptColomnInPost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ArticleType.cs" />
     <Compile Include="Models\Post.cs" />
@@ -231,6 +235,9 @@
     <Content Include="Views\Authentication\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Post\PostsRequests.cshtml" />
+    <Content Include="Views\Home\GetUsers.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -281,6 +288,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106030222208_addingUserRolesToUsersTable.resx">
       <DependentUpon>202106030222208_addingUserRolesToUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106031415447_addedAcceptColomnInPost.resx">
+      <DependentUpon>202106031415447_addedAcceptColomnInPost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

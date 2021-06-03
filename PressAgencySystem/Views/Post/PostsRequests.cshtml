@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PressAgencySystem.Models.Post>
+
+@{
+    ViewBag.Title = "PostsRequests";
+}
+
+<h2>Posts Requests</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleType)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ArticleType.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Approve", "Approve", new { id = item.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Decline", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+}
+</table>

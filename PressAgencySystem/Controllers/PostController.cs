@@ -48,7 +48,7 @@ namespace PressAgencySystem.Controllers
         }
         public ActionResult Index()
         {
-            var posts = _context.Posts.Include(c => c.ArticleType).ToList();
+            var posts = _context.Posts.Include(c => c.ArticleType).Where(p => p.Accepted == 1).ToList();
 
             return View(posts);
         }
@@ -80,6 +80,25 @@ namespace PressAgencySystem.Controllers
             _context.Posts.Remove(post);
             _context.SaveChanges();
 
+            return RedirectToAction("Index");
+        }
+        public ActionResult PostsRequests ()
+        {
+            var posts = _context.Posts.Include(c => c.ArticleType).Where(p => p.Accepted == 0);
+            return View(posts);
+        }
+
+        public ActionResult Approve(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var post = _context.Posts.SingleOrDefault(c => c.Id == id);
+            if (post == null)
+                return HttpNotFound();
+
+            post.Accepted = 1;
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)
