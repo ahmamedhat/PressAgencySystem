@@ -1,0 +1,18 @@
+﻿namespace PressAgencySystem.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ModifiedArticalTable : DbMigration
+    {
+        public override void Up()
+        {
+            AlterColumn("dbo.ArticleTypes", "Name", c => c.String(nullable: false, maxLength: 50));
+        }
+        
+        public override void Down()
+        {
+            AlterColumn("dbo.ArticleTypes", "Name", c => c.String());
+        }
+    }
+}

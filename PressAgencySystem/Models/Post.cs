@@ -14,5 +14,9 @@ namespace PressAgencySystem.Models
         public string Title { get; set; }
         [Required(ErrorMessage = "Description is Required")]
         public string Description { get; set; }
+        [Display(Name ="Type")]
+        public int ArticleTypeId { get; set; }
+        [Display(Name = "Article Type")]
+        public ArticleType ArticleType { get; set; }
     }
 }

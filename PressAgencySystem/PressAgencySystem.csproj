@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,10 +46,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -127,7 +126,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ArticleTypeController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -135,10 +137,51 @@
     <Compile Include="Migrations\202106021442239_AddingDataAnotationsToPosts.designer.cs">
       <DependentUpon>202106021442239_AddingDataAnotationsToPosts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106021456146_AddingArticleTypeToEveryPost.cs" />
+    <Compile Include="Migrations\202106021456146_AddingArticleTypeToEveryPost.designer.cs">
+      <DependentUpon>202106021456146_AddingArticleTypeToEveryPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106021502565_articleTypeIdColomnRemoved.cs" />
+    <Compile Include="Migrations\202106021502565_articleTypeIdColomnRemoved.designer.cs">
+      <DependentUpon>202106021502565_articleTypeIdColomnRemoved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106021533530_ModifiedArticalTable.cs" />
+    <Compile Include="Migrations\202106021533530_ModifiedArticalTable.designer.cs">
+      <DependentUpon>202106021533530_ModifiedArticalTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106021827265_ModifiedPostTable.cs" />
+    <Compile Include="Migrations\202106021827265_ModifiedPostTable.designer.cs">
+      <DependentUpon>202106021827265_ModifiedPostTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106021926065_ModifiedPostTable6.cs" />
+    <Compile Include="Migrations\202106021926065_ModifiedPostTable6.Designer.cs">
+      <DependentUpon>202106021926065_ModifiedPostTable6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106022002331_ModifiedPostTable7.cs" />
+    <Compile Include="Migrations\202106022002331_ModifiedPostTable7.Designer.cs">
+      <DependentUpon>202106022002331_ModifiedPostTable7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106022101089_addingRolesEntity.cs" />
+    <Compile Include="Migrations\202106022101089_addingRolesEntity.Designer.cs">
+      <DependentUpon>202106022101089_addingRolesEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106022102376_seedingRoleData.cs" />
+    <Compile Include="Migrations\202106022102376_seedingRoleData.Designer.cs">
+      <DependentUpon>202106022102376_seedingRoleData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106022138367_addingUserEntity.cs" />
+    <Compile Include="Migrations\202106022138367_addingUserEntity.Designer.cs">
+      <DependentUpon>202106022138367_addingUserEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ArticleType.cs" />
     <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\StoreContext.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\LoginFormViewModel.cs" />
+    <Compile Include="ViewModels\PostFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-minty.css" />
@@ -178,6 +221,12 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\ArticleType\Index.cshtml" />
+    <Content Include="Views\ArticleType\Create.cshtml" />
+    <Content Include="Views\Post\Create.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Authentication\Register.cshtml" />
+    <Content Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -198,6 +247,33 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202106021442239_AddingDataAnotationsToPosts.resx">
       <DependentUpon>202106021442239_AddingDataAnotationsToPosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021456146_AddingArticleTypeToEveryPost.resx">
+      <DependentUpon>202106021456146_AddingArticleTypeToEveryPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021502565_articleTypeIdColomnRemoved.resx">
+      <DependentUpon>202106021502565_articleTypeIdColomnRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021533530_ModifiedArticalTable.resx">
+      <DependentUpon>202106021533530_ModifiedArticalTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021827265_ModifiedPostTable.resx">
+      <DependentUpon>202106021827265_ModifiedPostTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021926065_ModifiedPostTable6.resx">
+      <DependentUpon>202106021926065_ModifiedPostTable6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106022002331_ModifiedPostTable7.resx">
+      <DependentUpon>202106022002331_ModifiedPostTable7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106022101089_addingRolesEntity.resx">
+      <DependentUpon>202106022101089_addingRolesEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106022102376_seedingRoleData.resx">
+      <DependentUpon>202106022102376_seedingRoleData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106022138367_addingUserEntity.resx">
+      <DependentUpon>202106022138367_addingUserEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -233,10 +309,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
