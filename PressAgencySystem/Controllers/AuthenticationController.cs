@@ -17,7 +17,13 @@ namespace PressAgencySystem.Controllers
         }
         public ActionResult Register()
         {
-            return View();
+            var roles = _context.Roles.ToList();
+            var viewModel = new UserFormViewModel
+            {
+                User = new User(),
+                Roles = roles
+            };
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Register(User user)
@@ -33,7 +39,7 @@ namespace PressAgencySystem.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return Content("Registered Successfully");
+            return RedirectToAction("Login");
         }
 
         public ActionResult Login()
@@ -56,7 +62,15 @@ namespace PressAgencySystem.Controllers
             else
             {
                 Session["UserName"] = loginUser.UserName;
-                return RedirectToAction("Index", "Home");
+                Session["UserId"] = loginUser.Id;
+
+                if (loginUser.RoleId == 1)
+                    Session["UserRole"] = "Admin";
+                else if (loginUser.RoleId == 2)
+                    Session["UserRole"] = "Editor";
+                else
+                    Session["UserRole"] = "Viewer";
+                return RedirectToAction("Index", "Home" , loginUser);
             }
 
         }

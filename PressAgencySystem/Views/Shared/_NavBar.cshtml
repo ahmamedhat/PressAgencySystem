@@ -4,15 +4,19 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            @Html.ActionLink("PressAgencySystem", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @if (Session["UserName"] != null)
+            {
+                @Html.ActionLink("Profile", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            }
         </div>
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav mr-auto">
                 <li class="nav-item">@Html.ActionLink("Posts", "Index", "Post", new { area = "" }, new { @class = "navbar-brand" })</li>
-                @if(Session["UserName"] != null)
+                @if (Session["UserName"] != null)
                 {
+                    <li class="nav-item">@Html.ActionLink("Users", "Index", "ArticleType", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li class="nav-item">@Html.ActionLink("PostsRequests", "Index", "ArticleType", new { area = "" }, new { @class = "navbar-brand" })</li>
                     <li class="nav-item">@Html.ActionLink("ArticleTypes", "Index", "ArticleType", new { area = "" }, new { @class = "navbar-brand" })</li>
-
                 }
 
             </ul>

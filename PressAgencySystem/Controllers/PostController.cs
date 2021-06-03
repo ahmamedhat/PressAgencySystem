@@ -36,12 +36,11 @@ namespace PressAgencySystem.Controllers
                 return View("Create", post);
             if (post.Id > 0)
             {
-                Console.WriteLine("this run 1");
                 _context.Entry(post).State = System.Data.Entity.EntityState.Modified;
             }
             else
             {
-                Console.WriteLine("this run 1");
+                post.Accepted = 0;
                 _context.Posts.Add(post);
             }
             _context.SaveChanges();

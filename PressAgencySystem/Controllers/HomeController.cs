@@ -1,6 +1,9 @@
-﻿using System;
+﻿using PressAgencySystem.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,23 +11,48 @@ namespace PressAgencySystem.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private StoreContext _context;
+        public HomeController()
         {
-            return View();
+            _context = new StoreContext();
+        }
+        public ActionResult Index(User user)
+        {
+            if (Session["UserId"] == null)
+                return View();
+            var id = ((int)Session["UserId"]);
+            var User = _context.Users.SingleOrDefault(c => c.Id == id);
+
+            return View(User);
         }
 
-        public ActionResult About()
+        public ActionResult Edit(int? id)
         {
-            ViewBag.Message = "Your application description page.";
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            return View();
+            var user = _context.Users.SingleOrDefault(c => c.Id == id);
+            if (user == null)
+                return HttpNotFound();
+   
+            return View(user);
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Edit(User user)
         {
-            ViewBag.Message = "Your contact page.";
+            if (!ModelState.IsValid)
+                return View("Edit", user);
 
-            return View();
+            _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                _context.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
