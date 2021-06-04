@@ -32,7 +32,6 @@ namespace PressAgencySystem.Models
 
         public int Views { get; set; }
         [Display(Name = "Created At")]
-
         public DateTime CreatedDate { get; set; }
     }
 }

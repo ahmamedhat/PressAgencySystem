@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="padding:0px">
+    <div class="navbar navbar-expand-sm navbar-dark navbar-fixed-top bg-dark  d-flex justify-content-between" style="margin-bottom:30px">
+        <div class="container">
+            <div class="navbar-header" style="display:flex;>
+                @if (Session["UserName"] == null)
+                {
+                    <div style="margin:9px 0 0 100px">
+                        @Html.ActionLink("Login", "Login", "Authentication", new { area = "" }, new { @class = "btn btn-primary", @style = "height: 40px ; " })
+
+                    </div>
+                }
+                else
+                {
+                <div style="margin:9px 0 0 100px">
+
+                    @Html.ActionLink("Logout", "Logout", "Authentication", new { area = "" }, new { @class = "btn btn-primary", @style = "height: 40px ; " })
+                </div>
+                    <li class="nav-item"></li>
+                }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

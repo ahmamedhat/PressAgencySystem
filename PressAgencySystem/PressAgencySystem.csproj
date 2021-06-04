@@ -130,6 +130,7 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ViewerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,6 +264,9 @@
     <Content Include="Views\MyPosts\Index.cshtml" />
     <Content Include="Views\MyPosts\Create.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Shared\ViewerLayout.cshtml" />
+    <Content Include="Views\Viewer\Index.cshtml" />
+    <Content Include="Views\Viewer\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

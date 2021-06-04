@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    if (Session["UserName"] == null)
+    if (Session["UserName"] == null || Session["UserRole"].ToString() != "Admin")
     {
         Response.Redirect("~/Authentication/Login");
     }

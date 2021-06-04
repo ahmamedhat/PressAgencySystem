@@ -10,6 +10,7 @@ using PressAgencySystem.ViewModels;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 
 namespace PressAgencySystem.Views.Editor
 {
@@ -42,9 +43,50 @@ namespace PressAgencySystem.Views.Editor
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult Create(Post post)
+        public ActionResult Create(Post post, HttpPostedFileBase file)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid && file == null)
+                return RedirectToAction("Create", post);
+            if (post.Id > 0)
+            {
+                string imageName2 = (file == null) ? null : System.IO.Path.GetFileName(file.FileName);
+                string imagePath2 = "~/Uploads/Posts";
+                string pathForSaving2 = Server.MapPath(imagePath2);
+                string uploadFilePathAndName2 = Path.Combine(pathForSaving2, imageName2);
+                file.SaveAs(uploadFilePathAndName2);
+                var oldPost = _context.Posts.SingleOrDefault(c => c.Id == post.Id);
+                oldPost.ImagePath = imagePath2 + "/" + imageName2;
+                oldPost.CreatedDate = DateTime.Now;
+                oldPost.Description = post.Description;
+                oldPost.ArticleTypeId = post.ArticleTypeId;
+                oldPost.Accepted = post.Accepted;
+                oldPost.CreatedDate = DateTime.Now;
+                var role = Session["UserRole"];
+                if (role == "Admin")
+                    oldPost.Accepted = 1;
+                oldPost.Views = post.Views;
+            }
+            else
+            {
+                string imageName = (file == null) ? null : System.IO.Path.GetFileName(file.FileName);
+                string imagePath = "~/Uploads/Posts";
+                string pathForSaving = Server.MapPath(imagePath);
+                string uploadFilePathAndName = Path.Combine(pathForSaving, imageName);
+                file.SaveAs(uploadFilePathAndName);
+                post.ImagePath = imagePath + "/" + imageName;
+                var id = ((int)Session["UserId"]);
+                var role = Session["UserRole"];
+                post.Accepted = 0;
+                if (role == "Admin")
+                    post.Accepted = 1;
+                post.CreatorId = id;
+                post.Views = 0;
+                post.CreatedDate = DateTime.Now;
+                _context.Posts.Add(post);
+            }
+
+            _context.SaveChanges();
+            /* if (!ModelState.IsValid)
                 return RedirectToAction("Create",post);
             if (post.Id > 0)
             {
@@ -60,7 +102,7 @@ namespace PressAgencySystem.Views.Editor
                 post.CreatorId = id;
                 _context.Posts.Add(post);
             }
-            _context.SaveChanges();
+            _context.SaveChanges();*/
             return RedirectToAction("Index");
         }
 

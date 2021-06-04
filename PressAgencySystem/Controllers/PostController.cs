@@ -1,14 +1,12 @@
 ﻿using PressAgencySystem.Models;
 using PressAgencySystem.ViewModels;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Net;
-using System.Diagnostics;
-using System.IO;
 
 namespace PressAgencySystem.Controllers
 {
@@ -32,13 +30,28 @@ namespace PressAgencySystem.Controllers
         }
         // GET: Post
         [HttpPost]
-        public ActionResult Create(Post post , HttpPostedFileBase file)
+        public ActionResult Create(Post post, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid && file == null)
                 return RedirectToAction("Create", post);
             if (post.Id > 0)
             {
-                _context.Entry(post).State = System.Data.Entity.EntityState.Modified;
+                string imageName2 = (file == null) ? null : System.IO.Path.GetFileName(file.FileName);
+                string imagePath2 = "~/Uploads/Posts";
+                string pathForSaving2 = Server.MapPath(imagePath2);
+                string uploadFilePathAndName2 = Path.Combine(pathForSaving2, imageName2);
+                 file.SaveAs(uploadFilePathAndName2);
+                var oldPost = _context.Posts.SingleOrDefault(c => c.Id == post.Id);
+                oldPost.ImagePath = imagePath2 + "/" + imageName2;
+                oldPost.CreatedDate = DateTime.Now;
+                oldPost.Description = post.Description;
+                oldPost.ArticleTypeId = post.ArticleTypeId;
+                oldPost.Accepted = post.Accepted;
+                oldPost.CreatedDate = DateTime.Now;
+                var role = Session["UserRole"];
+                if (role == "Admin")
+                    oldPost.Accepted = 1;
+                oldPost.Views = post.Views;
             }
             else
             {
@@ -50,7 +63,6 @@ namespace PressAgencySystem.Controllers
                 post.ImagePath = imagePath + "/" + imageName;
                 var id = ((int)Session["UserId"]);
                 var role = Session["UserRole"];
-
                 post.Accepted = 0;
                 if (role == "Admin")
                     post.Accepted = 1;
@@ -59,6 +71,7 @@ namespace PressAgencySystem.Controllers
                 post.CreatedDate = DateTime.Now;
                 _context.Posts.Add(post);
             }
+
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -69,11 +82,11 @@ namespace PressAgencySystem.Controllers
             return View(posts);
         }
 
-        public ActionResult Edit (int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            
+
             var post = _context.Posts.SingleOrDefault(c => c.Id == id);
             if (post == null)
                 return HttpNotFound();
@@ -85,7 +98,7 @@ namespace PressAgencySystem.Controllers
             return View("Create", viewModel);
         }
 
-        public ActionResult Delete (int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -98,7 +111,7 @@ namespace PressAgencySystem.Controllers
 
             return RedirectToAction("Index");
         }
-        public ActionResult PostsRequests ()
+        public ActionResult PostsRequests()
         {
             var posts = _context.Posts.Include(c => c.ArticleType).Where(p => p.Accepted == 0);
             return View(posts);

@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "GetUsers";
+    if (Session["UserName"] == null || Session["UserRole"].ToString() != "Admin")
+    {
+        Response.Redirect("~/Authentication/Login");
+    }
 }
 
 <h2>Users List</h2>

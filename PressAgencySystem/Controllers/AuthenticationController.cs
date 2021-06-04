@@ -69,7 +69,10 @@ namespace PressAgencySystem.Controllers
                 else if (loginUser.RoleId == 2)
                     Session["UserRole"] = "Editor";
                 else
+                {
                     Session["UserRole"] = "Viewer";
+                    return RedirectToAction("Index", "Viewer", loginUser);
+                }
                 return RedirectToAction("Index", "Home" , loginUser);
             }
 

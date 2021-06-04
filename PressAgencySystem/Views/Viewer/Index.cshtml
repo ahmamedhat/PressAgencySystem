@@ -2,15 +2,28 @@
 
 @{
     ViewBag.Title = "Index";
-    @{
-        if (Session["UserName"] == null || Session["UserRole"].ToString() == "Viewer")
+    Layout = "~/Views/Shared/ViewerLayout.cshtml";
+    if (Session["UserRole"] != null)
+    {
+        if (Session["UserRole"].ToString() == "Admin" || Session["UserRole"].ToString() == "Editor")
         {
             Response.Redirect("~/Authentication/Login");
         }
     }
+    
 }
 
-<h2>Posts</h2>
+<h2>Timeline</h2>
+
+
+@using (Html.BeginForm("Search", "Viewer", FormMethod.Get))
+{
+    <div class="form-group d-flex" style="margin:10px 0">
+        <input type="text" class="form-control" name="Search" id="search">
+        <input type="submit" class="btn btn-info" value="Filter" style="margin:0 10px">
+    </div>
+
+}
 
 <p>
     @Html.ActionLink("Create New", "Create", null, null, new { @class = "btn btn-success" })
@@ -68,27 +81,12 @@
 
                     </div>
 
-            }
-        </td>
-        <td>
-            @{
-                if (Session["UserRole"] == "Admin")
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary", @style = "margin:0 5px" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
-
                 }
-                else
-                {
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
-
-                }
-
-
-            }
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
 
 </table>

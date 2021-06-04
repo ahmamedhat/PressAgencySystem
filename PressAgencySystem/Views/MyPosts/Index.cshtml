@@ -37,7 +37,12 @@
         <th>
             @Html.DisplayNameFor(model => model.ArticleType)
         </th>
-
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Views)
+        </th>
         <th></th>
     </tr>
 
@@ -54,9 +59,24 @@
         @Html.DisplayFor(modelItem => item.ArticleType.Name)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+        @Html.DisplayFor(modelItem => item.CreatedDate)
     </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Views)
+    </td>
+    <td>
+        @{
+            <div style="width:30px ; max-height:40px">
+                <img style="width:100%" src="@Url.Content(item.ImagePath)" alt="@item.ImagePath" />
+
+            </div>
+
+    }
+</td>
+<td>
+    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+</td>
 </tr>
 }
 

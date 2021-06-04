@@ -2,6 +2,12 @@
 
 @{
     ViewBag.Title = "PostsRequests";
+    @{
+        if (Session["UserName"] == null || Session["UserRole"].ToString() == "Viewer")
+        {
+            Response.Redirect("~/Authentication/Login");
+        }
+    }
 }
 
 <h2>Posts Requests</h2>
@@ -20,22 +26,23 @@
         <th>Actions</th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
+    @foreach (var item in Model)
+    {
+        <tr>
 
-    <td>
-        @Html.DisplayFor(modelItem => item.Title)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ArticleType.Name)
-    </td>
-    <td>
-        @Html.ActionLink("Approve", "Approve", new { id = item.Id }, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Decline", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
-    </td>
-</tr>
-}
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleType.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Approve", "Approve", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Decline", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 </table>
