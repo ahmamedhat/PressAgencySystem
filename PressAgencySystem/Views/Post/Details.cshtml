@@ -4,7 +4,30 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Post Details</h2>
+
+
+<div class="card text-center" style="margin:30px 0; height:540px">
+    <div class="card-header">
+        @Html.DisplayFor(model => model.Creator.UserName)
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Html.DisplayFor(modelItem => modelItem.Title)</h5>
+        <div style="width: 30%; height: 300px; margin:auto">
+            <img class="card-img" src="@Url.Content(Model.ImagePath)" alt="@Html.DisplayFor(model => model.ImagePath)" style="width: 100%; height: 100%" />
+        </div>
+        <p class="card-text">@Html.DisplayFor(modelItem => modelItem.Description).</p>
+    </div>
+    <div class="card-footer text-muted">
+        @Html.DisplayFor(modelItem => modelItem.CreatedDate)   |   @Html.DisplayFor(modelItem => modelItem.Views) Views
+    </div>
+</div>
+<div style="width:10%; margin:auto">
+    @Html.ActionLink("Back to Wall", "Index", null, new { @class = "btn btn-primary" })
+
+</div>
+
+@*
 
 <div>
     <h4>Post</h4>
@@ -63,3 +86,5 @@
 <p>
     @Html.ActionLink("Back to Wall", "Index")
 </p>
+
+    *@

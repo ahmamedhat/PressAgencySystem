@@ -3,70 +3,93 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/ViewerLayout.cshtml";
-    
+
     if (Session["UserRole"].ToString() != "Viewer")
     {
         Response.Redirect("~/Authentication/Login");
     }
-    
+
 }
 
 <h2>Details</h2>
 
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Creator.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Creator.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ArticleType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ArticleType.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-    </dl>
+<div class="card text-center" style="margin:30px 0; height:540px">
+    <div class="card-header">
+        @Html.DisplayFor(model => model.Creator.UserName)
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Html.DisplayFor(modelItem => modelItem.Title)</h5>
+        <div style="width: 30%; height: 300px; margin:auto">
+            <img class="card-img" src="@Url.Content(Model.ImagePath)" alt="@Html.DisplayFor(model => model.ImagePath)" style="width: 100%; height: 100%" />
+        </div>
+        <p class="card-text">@Html.DisplayFor(modelItem => modelItem.Description).</p>
+    </div>
+    <div class="card-footer text-muted">
+        @Html.DisplayFor(modelItem => modelItem.CreatedDate)   |   @Html.DisplayFor(modelItem => modelItem.Views) Views
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Back to Wall", "Index")
-</p>
+<div style="width:10%; margin:auto">
+    @Html.ActionLink("Back to Wall", "Index" , null , new { @class = "btn btn-primary"})
+
+</div>
+
+
+@*
+    <div>
+        <h4>Post</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Creator.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Creator.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ArticleType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ArticleType.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Views)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Views)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to Wall", "Index")
+    </p>
+*@

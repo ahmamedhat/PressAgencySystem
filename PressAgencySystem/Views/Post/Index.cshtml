@@ -2,12 +2,12 @@
 
 @{
     ViewBag.Title = "Index";
-    
-        if (Session["UserName"] == null || Session["UserRole"].ToString() == "Viewer")
-        {
-            Response.Redirect("~/Authentication/Login");
-        }
-    
+
+    if (Session["UserName"] == null || Session["UserRole"].ToString() == "Viewer")
+    {
+        Response.Redirect("~/Authentication/Login");
+    }
+
 }
 
 <h2>Posts</h2>
@@ -15,62 +15,19 @@
 <p>
     @Html.ActionLink("Create New", "Create", null, null, new { @class = "btn btn-success" })
 </p>
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArticleType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Creator)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Views)
-        </th>
-        <th></th>
-        <th>Actions</th>
 
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArticleType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creator.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Views)
-            </td>
-            <td>
-                @{
-                    <div style="width:30px ; max-height:40px">
-                        <img style="width:100%" src="@Url.Content(item.ImagePath)" alt="@item.ImagePath" />
-
-                    </div>
-
-            }
-        </td>
-        <td>
+@foreach (var item in Model)
+{
+    <div class="card text-center" style="margin:30px 0; height:540px">
+        <div class="card-header">
+            @Html.DisplayFor(modelItem => item.Creator.UserName)
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+            <div style="width: 30%; height: 300px; margin:auto">
+                <img class="card-img" src="@Url.Content(item.ImagePath)" alt="@item.ImagePath s" style="width: 100%; height: 100%"/>
+            </div>
+            <p class="card-text">@Html.DisplayFor(modelItem => item.Description).</p>
             @{
                 if (Session["UserRole"] == "Admin")
                 {
@@ -83,12 +40,91 @@
                 {
                     @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
 
+                    }
                 }
-
-
-            }
-        </td>
-    </tr>
+            </div>
+        <div class="card-footer text-muted">
+            @Html.DisplayFor(modelItem => item.CreatedDate)   |   @Html.DisplayFor(modelItem => item.Views) Views
+        </div>
+    </div>
 }
 
-</table>
+@*
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Creator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Views)
+            </th>
+            <th></th>
+            <th>Actions</th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creator.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Views)
+                </td>
+                <td>
+                    @{
+                        <div style="width:30px ; max-height:40px">
+                            <img style="width:100%" src="@Url.Content(item.ImagePath)" alt="@item.ImagePath" />
+
+                        </div>
+
+                }
+            </td>
+            <td>
+                @{
+                    if (Session["UserRole"] == "Admin")
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary", @style = "margin:0 5px" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+
+                    }
+
+
+                }
+            </td>
+        </tr>
+    }
+
+    </table>
+*@
