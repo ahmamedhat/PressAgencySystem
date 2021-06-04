@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Net;
+using PressAgencySystem.ViewModels;
 
 namespace PressAgencySystem.Controllers
 {
@@ -56,6 +57,42 @@ namespace PressAgencySystem.Controllers
             post.Views = post.Views + 1;
             _context.SaveChanges();
             return View(post);
+        }
+
+        public ActionResult Login(string username , string password)
+        {
+            if (username == "" || password == "")
+                return RedirectToAction("Index");
+            var user = new LoginFormViewModel { 
+                UserName = username,
+                Password = password
+            };
+
+            var loginUser = _context.Users.Where(u => u.UserName == user.UserName && u.Password == user.Password).FirstOrDefault();
+            if (loginUser == null)
+                return RedirectToAction("Index");
+
+            else
+            {
+                Session["UserName"] = loginUser.UserName;
+                Session["UserId"] = loginUser.Id;
+
+                if (loginUser.RoleId == 1)
+                    Session["UserRole"] = "Admin";
+                else if (loginUser.RoleId == 2)
+                    Session["UserRole"] = "Editor";
+                else
+                {
+                    Session["UserRole"] = "Viewer";
+                    return RedirectToAction("Index", "Viewer", loginUser);
+                }
+                return RedirectToAction("Index", "Home", loginUser);
+            }
+        }
+
+        public ActionResult Register()
+        {
+            return Redirect("~/Authentication/Register");
         }
     }
 }

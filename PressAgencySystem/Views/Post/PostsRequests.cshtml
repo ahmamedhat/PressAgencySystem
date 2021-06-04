@@ -2,12 +2,12 @@
 
 @{
     ViewBag.Title = "PostsRequests";
-    @{
+    
         if (Session["UserName"] == null || Session["UserRole"].ToString() == "Viewer")
         {
             Response.Redirect("~/Authentication/Login");
         }
-    }
+    
 }
 
 <h2>Posts Requests</h2>

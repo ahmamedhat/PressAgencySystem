@@ -10,7 +10,7 @@
             Response.Redirect("~/Authentication/Login");
         }
     }
-    
+
 }
 
 <h2>Timeline</h2>
@@ -25,9 +25,40 @@
 
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create", null, null, new { @class = "btn btn-success" })
-</p>
+@if (Session["UserRole"] == null)
+{
+    <p>
+        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#loginModal">Create New</a>
+    </p>
+
+}
+
+<div class="modal fade hide" id="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Login</h2>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Login", "Viewer", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username" id="username">
+                    </div>
+                    <div class="form-group" style="margin:0 0 15px 0">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    <input type="submit" class="btn btn-info" value="Login" style="margin:0 10px">
+                    @Html.ActionLink("Register", "Register", null , new { @class = "btn btn-primary" })
+                }
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
 <table class="table table-bordered table-hover">
     <tr>
         <th>
@@ -55,38 +86,47 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArticleType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creator.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Views)
-            </td>
-            <td>
-                @{
-                    <div style="width:30px ; max-height:40px">
-                        <img style="width:100%" src="@Url.Content(item.ImagePath)" alt="@item.ImagePath" />
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ArticleType.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Creator.UserName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Views)
+    </td>
+    <td>
+        @{
+            <div style="width:30px ; max-height:40px">
+                <img style="width:100%" src="@Url.Content(item.ImagePath)" alt="@item.ImagePath" />
 
-                    </div>
+            </div>
 
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
-            </td>
-        </tr>
+        }
+    </td>
+    @if (Session["UserRole"] == null)
+    {
+    <td>
+        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Details</a>
+    </td>
+    }
+    else
+    {
+    <td>
+            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+    </td>
+    }
+</tr>
     }
 
 </table>
