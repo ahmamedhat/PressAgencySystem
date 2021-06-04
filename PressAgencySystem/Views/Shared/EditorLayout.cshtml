@@ -1,18 +1,28 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{
+        ViewBag.Title = "Create";
+        if (Session["UserName"] == null || Session["UserRole"].ToString() != "Editor")
+        {
+            Response.Redirect("~/Authentication/Login");
+        }
+    }
 </head>
 <body style="padding:0px">
     @Html.Partial("_NavBar")
+
     <div class="container body-content">
         @RenderBody()
-        <hr />
     </div>
+
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

@@ -28,13 +28,13 @@ namespace PressAgencySystem.Controllers
         [HttpPost]
         public ActionResult Register(User user)
         {
-            if (!ModelState.IsValid)
-                return View("Register", user);
             if (_context.Users.Where(u => u.Email == user.Email).Any())
             {
                 ModelState.AddModelError("Email", "This Email Already Exists");
-                return View("Register", user);
+                return RedirectToAction("Register");
             }
+            if (!ModelState.IsValid)
+                return RedirectToAction("Register");
 
             _context.Users.Add(user);
             _context.SaveChanges();

@@ -71,8 +71,11 @@ namespace PressAgencySystem.Controllers
             if (!ModelState.IsValid)
                 return View("Edit", user);
 
-            _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
-            
+
+            var oldUser = _context.Users.SingleOrDefault(c => c.Id == user.Id);
+            oldUser.UserName = user.UserName;
+            oldUser.Email = user.Email;
+            oldUser.Password = user.Password;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

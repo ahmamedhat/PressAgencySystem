@@ -181,6 +181,26 @@
     <Compile Include="Migrations\202106031415447_addedAcceptColomnInPost.Designer.cs">
       <DependentUpon>202106031415447_addedAcceptColomnInPost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106031734185_addedPostCreatorColomnInPostsTable.cs" />
+    <Compile Include="Migrations\202106031734185_addedPostCreatorColomnInPostsTable.Designer.cs">
+      <DependentUpon>202106031734185_addedPostCreatorColomnInPostsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106040013495_addingCreatedAt.cs" />
+    <Compile Include="Migrations\202106040013495_addingCreatedAt.Designer.cs">
+      <DependentUpon>202106040013495_addingCreatedAt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106040035515_addingViewCounts.cs" />
+    <Compile Include="Migrations\202106040035515_addingViewCounts.Designer.cs">
+      <DependentUpon>202106040035515_addingViewCounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106040109314_addingImageUploadInPostModel.cs" />
+    <Compile Include="Migrations\202106040109314_addingImageUploadInPostModel.Designer.cs">
+      <DependentUpon>202106040109314_addingImageUploadInPostModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106040110316_addingImageUploadInPostModel2.cs" />
+    <Compile Include="Migrations\202106040110316_addingImageUploadInPostModel2.Designer.cs">
+      <DependentUpon>202106040110316_addingImageUploadInPostModel2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ArticleType.cs" />
     <Compile Include="Models\Post.cs" />
@@ -191,6 +211,7 @@
     <Compile Include="ViewModels\LoginFormViewModel.cs" />
     <Compile Include="ViewModels\PostFormViewModel.cs" />
     <Compile Include="ViewModels\UserFormViewModel.cs" />
+    <Compile Include="Views\Editor\MyPostsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-minty.css" />
@@ -238,9 +259,15 @@
     <Content Include="Views\Post\PostsRequests.cshtml" />
     <Content Include="Views\Home\GetUsers.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Shared\EditorLayout.cshtml" />
+    <Content Include="Views\MyPosts\Index.cshtml" />
+    <Content Include="Views\MyPosts\Create.cshtml" />
+    <Content Include="Views\Post\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\Posts\" />
+    <Folder Include="Uploads\ProfilePictures\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -291,6 +318,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106031415447_addedAcceptColomnInPost.resx">
       <DependentUpon>202106031415447_addedAcceptColomnInPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106031734185_addedPostCreatorColomnInPostsTable.resx">
+      <DependentUpon>202106031734185_addedPostCreatorColomnInPostsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106040013495_addingCreatedAt.resx">
+      <DependentUpon>202106040013495_addingCreatedAt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106040035515_addingViewCounts.resx">
+      <DependentUpon>202106040035515_addingViewCounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106040109314_addingImageUploadInPostModel.resx">
+      <DependentUpon>202106040109314_addingImageUploadInPostModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106040110316_addingImageUploadInPostModel2.resx">
+      <DependentUpon>202106040110316_addingImageUploadInPostModel2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

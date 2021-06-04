@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
-    if(Session["UserName"] == null)
+    if (Session["UserName"] == null || Session["UserRole"].ToString() != "Editor")
     {
         Response.Redirect("~/Authentication/Login");
     }
@@ -10,10 +10,10 @@
 
 <h2>Post Details</h2>
 
-@using (Html.BeginForm("Create" , "Post" , FormMethod.Post, new { enctype="multipart/form-data" }))
+@using (Html.BeginForm("Create", "MyPosts"))
 {
-        @Html.AntiForgeryToken()
-    
+    @Html.AntiForgeryToken()
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -42,14 +42,6 @@
         </div>
 
         <div class="form-group" style="margin:10px 0">
-            @Html.LabelFor(model => model.Post.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" class="form-control" name="file" id="file"/>
-                @Html.ValidationMessageFor(model => model.Post.ArticleTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group" style="margin:25px 0 10px 0">
             <div class="col-md-offset-2 col-md-10">
                 @Html.HiddenFor(m => m.Post.Id)
                 <input type="submit" value="Save Post" class="btn btn-primary" />
@@ -59,5 +51,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index" , null , null , new {@class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", null, null, new { @class = "btn btn-primary" })
 </div>

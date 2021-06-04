@@ -1,0 +1,63 @@
+﻿@model IEnumerable<PressAgencySystem.Models.Post>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/EditorLayout.cshtml";
+    if (Session["UserName"] == null || Session["UserRole"].ToString() != "Editor")
+    {
+        Response.Redirect("~/Authentication/Login");
+    }
+}
+
+<h2>Your Posts</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create" , null , null , new { @class = "btn btn-success"})
+</p>
+
+@using (Html.BeginForm("Search" , "MyPosts", FormMethod.Get))
+            {
+                <div class="form-group d-flex" style="margin:10px 0">
+                    <input type="text" class="form-control" name="Search" id="search">
+                    <input type="submit" class="btn btn-info" value="Search" style="margin:0 10px">
+                </div>
+
+            }
+
+
+<table class="table table-bordered table-hover" style="margin:30px 0">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleType)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ArticleType.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+}
+
+</table>

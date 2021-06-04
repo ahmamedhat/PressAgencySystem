@@ -12,7 +12,12 @@
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav mr-auto">
                 <li class="nav-item">@Html.ActionLink("Posts", "Index", "Post", new { area = "" }, new { @class = "navbar-brand" })</li>
-                @if (Session["UserName"] != null)
+                @if (Session["UserName"] != null && Session["UserRole"] == "Editor")
+                {
+                    <li class="nav-item">@Html.ActionLink("MyPosts", "Index", "Myposts", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li class="nav-item">@Html.ActionLink("ReceivedQuestions", "Index", "Myposts", new { area = "" }, new { @class = "navbar-brand" })</li>
+                }
+                @if (Session["UserName"] != null && Session["UserRole"] == "Admin")
                 {
                     <li class="nav-item">@Html.ActionLink("Users", "GetUsers", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                     <li class="nav-item">@Html.ActionLink("PostsRequests", "PostsRequests", "Post", new { area = "" }, new { @class = "navbar-brand" })</li>
